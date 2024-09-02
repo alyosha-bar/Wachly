@@ -1,95 +1,67 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
-export default function Home() {
+import { db } from '@/db';
+import { videosTable, videoRatingsTable, videoReviewsTable, usersTable, channelsTable } from "@/db/schema";
+import { PostsForm } from "./PostsForm";
+import { eq } from 'drizzle-orm'
+
+import {index} from "@/algolia"; // change the index
+
+// Connect algolia to search the database with a search bar component
+
+
+
+
+export default async function Home() {
+
+  // const videos = await db.select().from(videosTable).execute();
+  // console.log("Fetched videos:", videos);
+  // console.log("Putting Videos into Algolia");
+
+
+
+
+  // Example query
+  const videos = await db.select({
+    videoId: videosTable.videoId,
+    title: videosTable.title,
+    thumbnailUrl: videosTable.thumbnailUrl,
+    channelTitle: channelsTable.channelTitle,
+  })
+  .from(videosTable)
+  .leftJoin(channelsTable, eq(videosTable.channelId, channelsTable.id)).all();
+
+  console.log(videos);
+
+  // const addToIndex = async () => {
+
+  //   // add to index only if unique ID
+
+  // }
+
+  // index.saveObjects(posts, {
+  //   autoGenerateObjectIDIfNotExist: true
+  // });
+
+
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div>
+      <h1> Welcome! </h1>
+
+      {videos.map((video) => (
+        <div key={video.videoId}> 
+          <h2>{video.title}</h2>
+          <img
+            src={video.thumbnailUrl}
+            alt="video thumbnail"
+            width={300}
+            height={200}
+          />
+          <h3> {video.channelTitle} </h3>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      ))}
+    </div>
   );
 }
