@@ -6,21 +6,18 @@ import { videosTable, videoRatingsTable, videoReviewsTable, usersTable, channels
 import { PostsForm } from "./PostsForm";
 import { eq } from 'drizzle-orm'
 
-import {index} from "@/algolia"; // change the index
+import { index } from "@/algolia"; // change the index
 
-// Connect algolia to search the database with a search bar component
+
+// Mimic youtube API usage with the search bar
+// Save the search results in the database
+
+// Connect algolia index to search the database with a search bar component
 
 
 
 
 export default async function Home() {
-
-  // const videos = await db.select().from(videosTable).execute();
-  // console.log("Fetched videos:", videos);
-  // console.log("Putting Videos into Algolia");
-
-
-
 
   // Example query
   const videos = await db.select({
@@ -33,17 +30,6 @@ export default async function Home() {
   .leftJoin(channelsTable, eq(videosTable.channelId, channelsTable.id)).all();
 
   console.log(videos);
-
-  // const addToIndex = async () => {
-
-  //   // add to index only if unique ID
-
-  // }
-
-  // index.saveObjects(posts, {
-  //   autoGenerateObjectIDIfNotExist: true
-  // });
-
 
 
   return (
