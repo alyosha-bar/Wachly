@@ -1,7 +1,12 @@
 // algolia.ts
 import algoliasearch from 'algoliasearch';
 
-const client = algoliasearch(
+// export const client = algoliasearch(
+//   process.env.ALGOLIA_APP_ID as string,
+//   process.env.ALGOLIA_ADMIN_API_ID as string
+// );
+
+export const client = algoliasearch(
   process.env.ALGOLIA_APP_ID as string,
   process.env.ALGOLIA_ADMIN_API_ID as string
 );
