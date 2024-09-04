@@ -10,6 +10,7 @@ import { InstantSearch, SearchBox, Hits } from "react-instantsearch";
 import { index } from "@/algolia";
 import Link from "next/link";
 
+import './home.css'
 
 // Define the shape of the video object for the results STATE
 interface Video {
@@ -22,10 +23,12 @@ interface Video {
 
 function Hit({ hit }: { hit: any }) {
     return (
-        <Link href={'/'}>
+        <Link className="card"  href={`https://www.youtube.com/watch?v=${hit.videoId}`}>
+            
+            <img className="thumbnail" src={hit.thumbnailUrl} alt="Thumbnail of the video." />
             <h2> {hit.title} </h2>
-            <img src={hit.thumbnailUrl} alt="Thumbnail of the video." />
-            <p> {hit.description} </p>
+            {/* <p> {hit.description} </p> */}
+            <h4> {hit.channelTitle} </h4>
         </Link>
     )
 }
@@ -37,6 +40,7 @@ export default function Main() {
   const [results, setResults] = useState<Video[]>([]);
 
     const searchClient = liteclient(process.env.ALGOLIA_APP_ID as string , process.env.ALGOLIA_ADMIN_API_ID as string);    
+       
 
 
   //search bar for yt videos
@@ -143,10 +147,12 @@ export default function Main() {
   // ensure type safety for the results STATE ✅
   return (
     <>
-        <SearchBar onSearch={handleSearch} />
+        {/* <SearchBar onSearch={handleSearch} /> */}
         <InstantSearch searchClient={searchClient} indexName={index.indexName} >
-            <SearchBox />
-            <Hits hitComponent={Hit} />
+            <div className="searchbar-container">
+              <SearchBox className="searchbar" placeholder="Search for a video ... "/>
+            </div>
+            <Hits hitComponent={Hit} className="results" />
         </InstantSearch>
 
       {/* <div className="grid grid-cols-3 w-5/6 gap-6 mx-auto mt-8">

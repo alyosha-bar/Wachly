@@ -7,6 +7,8 @@ import { PostsForm } from "./PostsForm";
 
 import Main from "./home/page";
 
+import Navbar from "@/components/Navbar";
+
 import { eq } from 'drizzle-orm'
 
 import { index } from "@/algolia"; // change the index
@@ -37,7 +39,6 @@ export default async function Home() {
 
   return (
     <div>
-      <h1> Welcome! </h1>
 
       {/* {videos.map((video) => (
         <div key={video.videoId}> 
@@ -54,7 +55,7 @@ export default async function Home() {
 
         </div>
       ))} */}
-      
+      <Navbar />
       <Main />
     </div>
   );

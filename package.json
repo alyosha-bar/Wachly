@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.4.1",
     "@libsql/client": "^0.10.0",
     "algoliasearch": "^4.24.0",
     "dotenv": "^16.4.5",

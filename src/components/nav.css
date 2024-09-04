@@ -1,0 +1,62 @@
+
+.navbar {
+    display: flex;
+    width: 100%;
+    justify-content:space-around;
+    align-items: center;
+    height: 13vh;
+    background-color: rgb(86, 30, 127);
+}
+
+.logo {
+    margin: 0 70px;
+    font-size: 1.7rem;
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    align-items: center;
+    margin: 4em;
+    list-style: none;
+}
+
+.navbar-links li {
+    padding: 1.5em 2em;
+}
+
+.nav-link {
+    font-size:1.1rem;
+}
+
+.navbar-links li:hover {
+    background-color: rgb(56, 19, 82);
+    border-radius: 10px;
+}
+
+.sign-in {
+    padding: 1.5em 2em;
+    background-color: rgb(86, 30, 127);
+    border: none;   
+    font-size: 1rem;
+}
+
+.sign-in:hover {
+    background-color: rgb(56, 19, 82);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.userbutton {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userbutton * {
+    width: 40px;
+    height: 40px;
+}
