@@ -39,7 +39,7 @@ export default function Main() {
   //HOME
   const [results, setResults] = useState<Video[]>([]);
 
-    const searchClient = liteclient(process.env.ALGOLIA_APP_ID as string , process.env.ALGOLIA_ADMIN_API_ID as string);    
+    // const searchClient = liteclient(process.env.ALGOLIA_APP_ID as string , process.env.ALGOLIA_ADMIN_API_ID as string);    
        
 
 
@@ -47,6 +47,12 @@ export default function Main() {
   const handleSearch = async (query: string) => {
     console.log("Search query:", query);
     // Perform the search logic here
+
+
+    // search the database with ALL searchable attributes
+    console.log("Searching Database")
+    const dbResults = await searchDB(query);
+    console.log(dbResults);
 
 
     console.log("Searching API to help with the results")
@@ -59,11 +65,11 @@ export default function Main() {
     
 
         // add to Algolia Index
-        console.log("Adding to Algolia Index")
+        // console.log("Adding to Algolia Index")
         // index.saveObjects(videos, {
         //     autoGenerateObjectIDIfNotExist: true
         // });
-        console.log("Adding COMPLETE to Algolia Index")
+        // console.log("Adding COMPLETE to Algolia Index")
 
 
         setResults(videos);
@@ -148,35 +154,38 @@ export default function Main() {
   return (
     <>
         {/* <SearchBar onSearch={handleSearch} /> */}
-        <InstantSearch searchClient={searchClient} indexName={index.indexName} >
+        {/* <InstantSearch searchClient={searchClient} indexName={index.indexName} >
             <div className="searchbar-container">
               <SearchBox className="searchbar" placeholder="Search for a video ... "/>
             </div>
             <Hits hitComponent={Hit} className="results" />
-        </InstantSearch>
+        </InstantSearch> */}
 
-      {/* <div className="grid grid-cols-3 w-5/6 gap-6 mx-auto mt-8">
+        
+        <SearchBar onSearch={handleSearch} />
+
+      <div className="results">
         {results && results.map((result) => (
-          <div key={result.videoId} className="w-4/6 max-w-screen-md bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105">
+          <Link href={`/videos/${result.videoId}`} key={result.videoId} className="result">
             <img 
               src={result.thumbnailUrl} 
               width={300}
               height={169} // Maintain the aspect ratio of 16:9
               alt={result.title}
-              className="w-full"
+              className="thumbnail"
             />
-            <div className="p-4">
+            <div className="text-area">
               <div className="font-semibold text-lg text-gray-800 mb-2">{result.title}</div>
               <div className="text-gray-600 flex justify-between">
-                <a href={`https://www.youtube.com/@${result.channelTitle}`} className="text-blue-500 hover:underline">
+                <div className="text-blue-500 hover:underline">
                   {result.channelTitle}
-                </a>
+                </div>
                 <div className="text-md"> 5 ⭐</div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
-      </div> */}
+      </div>
     </>
   );
 }
