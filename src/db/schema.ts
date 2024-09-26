@@ -20,7 +20,7 @@ export const videosTable = sqliteTable('Videos', {
 
 // Define the Users table
 export const usersTable = sqliteTable('Users', {
-  id: integer('id').primaryKey(),
+  id: text('id').primaryKey(),
   username: text('username').notNull(),
   email: text('email').notNull()
 });

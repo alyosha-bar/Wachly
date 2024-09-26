@@ -7,8 +7,9 @@ export async function POST(req : any) {
         const body = await req.json();
         const query = body.query;
 
-        console.log(query)
+        console.log("Looking for '" + query + "' in Database.")
         // find in turso
+        
 
 
         // return query results

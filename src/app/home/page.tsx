@@ -21,27 +21,12 @@ interface Video {
   channelTitle: string;
 }
 
-function Hit({ hit }: { hit: any }) {
-    return (
-        <Link className="card"  href={`https://www.youtube.com/watch?v=${hit.videoId}`}>
-            
-            <img className="thumbnail" src={hit.thumbnailUrl} alt="Thumbnail of the video." />
-            <h2> {hit.title} </h2>
-            {/* <p> {hit.description} </p> */}
-            <h4> {hit.channelTitle} </h4>
-        </Link>
-    )
-}
 
 
 export default function Main() {
 
   //HOME
-  const [results, setResults] = useState<Video[]>([]);
-
-    // const searchClient = liteclient(process.env.ALGOLIA_APP_ID as string , process.env.ALGOLIA_ADMIN_API_ID as string);    
-       
-
+  const [results, setResults] = useState<Video[]>([]);  
 
   //search bar for yt videos
   const handleSearch = async (query: string) => {
@@ -62,16 +47,6 @@ export default function Main() {
         // run a search on the api to supplement the results
         const videos = await searchAPI(query); // --> API search needs to ADD to Aloglia index
         console.log(videos);
-    
-
-        // add to Algolia Index
-        // console.log("Adding to Algolia Index")
-        // index.saveObjects(videos, {
-        //     autoGenerateObjectIDIfNotExist: true
-        // });
-        // console.log("Adding COMPLETE to Algolia Index")
-
-
         setResults(videos);
     }
 
@@ -153,13 +128,6 @@ export default function Main() {
   // ensure type safety for the results STATE ✅
   return (
     <>
-        {/* <SearchBar onSearch={handleSearch} /> */}
-        {/* <InstantSearch searchClient={searchClient} indexName={index.indexName} >
-            <div className="searchbar-container">
-              <SearchBox className="searchbar" placeholder="Search for a video ... "/>
-            </div>
-            <Hits hitComponent={Hit} className="results" />
-        </InstantSearch> */}
 
         
         <SearchBar onSearch={handleSearch} />
